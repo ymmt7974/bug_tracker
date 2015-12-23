@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+  <meta charset="UTF-8"/>
+  <title>{% block title %}Welcome!{% endblock %}</title>
+
+  {# BootstrapのCDN参照 #}
+  <link rel="stylesheets" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  {# アプリケーション用のCSS #}
+  <link rel="stylesheet" href="/css/app.css">
+
+  {% block stylesheets %}{% endblock %}
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+  {# ナビゲーションバー #}
+  {% include '_navbar.html.twig' %}
+
+  <div class="container">
+    {# Flashメッセージ #}
+    {% include '_flash.html.twig' %}
+
+    {% block body %}{% endblock %}
+  </div>
+
+  {# JQueryのCDN参照 #}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  {# BootstrapのCDN参照 #}
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  {% block javascripts %}{% endblock %}
+</body>
 </html>
