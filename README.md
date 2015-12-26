@@ -1,7 +1,7 @@
-my_symfnoy
+sf_tutorial_base
 ==========
 
-自分用 Symfony プロジェクトのスケルトン
+Symfony チュートリアル用スケルトン 
 
 - Locale: ja
 - DB: SQLite
