@@ -4,6 +4,7 @@
 /vendor/
 /web/bundles/
 /var/
+!var/.gitkeep
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
