@@ -6,5 +6,6 @@ Symfony チュートリアル用スケルトン
 - Locale: ja
 - DB: SQLite
 - CSS: Bootstrap3 CDN
-- Form: Bootstrap
-- Layout Template: Bootstrap
+- Layout Template: Bootstrap3
+- CRUD Template: Bootstrap3
+- Form: Bootstrap3
