@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Product</h1>
+
+    <table class="table table-striped table-hover table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <a href="{{ path('product_index') }}" class="btn btn-default" role="button">Back to the list</a>
+    <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary" role="button">Edit</a>
+    {{ form_start(delete_form, {'attr': {'style': 'display: inline'}}) }}
+        <input type="submit" class="btn btn-danger" role="button" value="Delete">
+    {{ form_end(delete_form) }}{% endblock %}
