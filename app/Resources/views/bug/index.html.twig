@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bug list</h1>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Created</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bug in bugs %}
+            <tr>
+                <td><a href="{{ path('bug_show', { 'id': bug.id }) }}">{{ bug.id }}</a></td>
+                <td>{{ bug.description }}</td>
+                <td>{% if bug.created %}{{ bug.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ bug.status }}</td>
+                <td>
+                    <a href="{{ path('bug_show', { 'id': bug.id }) }}" class="btn btn-default btn-xs" role="button">show</a>
+                    <a href="{{ path('bug_edit', { 'id': bug.id }) }}" class="btn btn-primary btn-xs" role="button">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('bug_new') }}" class="btn btn-primary" role="button">Create a new entry</a>
+{% endblock %}

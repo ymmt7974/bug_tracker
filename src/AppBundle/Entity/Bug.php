@@ -12,6 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Bug
 {
+
+    const STATUS_OPEN = "OPEN";
+    const STATUS_CLOSE = "CLOSE";
+    const STATUSES = [self::STATUS_OPEN, self::STATUS_CLOSE];
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -62,5 +67,171 @@ class Bug
     public function __construct()
     {
         $this->products = new ArrayCollection();
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @return Bug
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set created.
+     *
+     * @param \DateTime $created
+     *
+     * @return Bug
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created.
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param string $status
+     *
+     * @return Bug
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set engineer.
+     *
+     * @param \AppBundle\Entity\User|null $engineer
+     *
+     * @return Bug
+     */
+    public function setEngineer(\AppBundle\Entity\User $engineer = null)
+    {
+        $this->engineer = $engineer;
+
+        return $this;
+    }
+
+    /**
+     * Get engineer.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getEngineer()
+    {
+        return $this->engineer;
+    }
+
+    /**
+     * Set reporter.
+     *
+     * @param \AppBundle\Entity\User|null $reporter
+     *
+     * @return Bug
+     */
+    public function setReporter(\AppBundle\Entity\User $reporter = null)
+    {
+        $this->reporter = $reporter;
+
+        return $this;
+    }
+
+    /**
+     * Get reporter.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getReporter()
+    {
+        return $this->reporter;
+    }
+
+    /**
+     * Add product.
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Bug
+     */
+    public function addProduct(\AppBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product.
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProduct(\AppBundle\Entity\Product $product)
+    {
+        return $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }
