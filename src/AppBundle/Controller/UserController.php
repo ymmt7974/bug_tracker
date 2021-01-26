@@ -67,9 +67,19 @@ class UserController extends Controller
     {
         $deleteForm = $this->createDeleteForm($user);
 
+        $dql = "SELECT b, e, r FROM AppBundle:Bug b " .
+            "JOIN b.engineer e JOIN b.reporter r ".
+            "WHERE b.status = 'OPEN' AND (e.id = ?1 OR r.id = ?1) " .
+            "ORDER BY b.created DESC";
+        
+        $bugs = $this->getDoctrine()->getManager()->createQuery($dql)
+            ->setParameter(1, $user->getId())
+            ->getResult();
+
         return $this->render('user/show.html.twig', array(
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
+            'bugs' => $bugs,
         ));
     }
 

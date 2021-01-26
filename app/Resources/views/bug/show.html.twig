@@ -42,4 +42,5 @@
     <a href="{{ path('bug_edit', { 'id': bug.id }) }}" class="btn btn-primary" role="button">Edit</a>
     {{ form_start(delete_form, {'attr': {'style': 'display: inline'}}) }}
         <input type="submit" class="btn btn-danger" role="button" value="Delete">
-    {{ form_end(delete_form) }}{% endblock %}
+    {{ form_end(delete_form) }}
+{% endblock %}
