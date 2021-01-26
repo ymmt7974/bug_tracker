@@ -16,7 +16,7 @@ class Bug
     const STATUS_OPEN = "OPEN";
     const STATUS_CLOSE = "CLOSE";
     const STATUSES = [self::STATUS_OPEN, self::STATUS_CLOSE];
-    
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -233,5 +233,15 @@ class Bug
     public function getProducts()
     {
         return $this->products;
+    }
+    
+    public function close()
+    {
+        $this->setStatus(self::STATUS_CLOSE);
+    }
+
+    public function isClose()
+    {
+        return $this->getStatus() == self::STATUS_CLOSE;
     }
 }

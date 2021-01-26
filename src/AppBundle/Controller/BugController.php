@@ -97,7 +97,7 @@ class BugController extends Controller
         $deleteForm = $this->createDeleteForm($bug);
 
         dump(get_class($bug->getEngineer()));
-        
+
         return $this->render('bug/show.html.twig', array(
             'bug' => $bug,
             'delete_form' => $deleteForm->createView(),
@@ -163,5 +163,29 @@ class BugController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Close a Bug.
+     *
+     * @Route("/{id}/close", name="bug_close")
+     * @Method("PUT")
+     */
+    public function closeAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Bug');
+        $bug = $repository->find($id);
+
+        if (!$bug) {
+            throw $this->createNotFoundException('No bug found for id '.$id);
+        }
+
+        if ($this->isCsrfTokenValid('close_bug', $request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $bug->close();
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('bug_show', ['id' => $bug->getId()]);
     }
 }
