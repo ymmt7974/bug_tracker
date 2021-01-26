@@ -8,6 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Open bugs</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
             <tr>
                 <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
                 <td>{{ product.name }}</td>
+                <td>{{ product.openBugs }}</td>
                 <td>
                     <a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-default btn-xs" role="button">show</a>
                     <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary btn-xs" role="button">edit</a>
