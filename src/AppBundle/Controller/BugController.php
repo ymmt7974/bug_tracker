@@ -30,12 +30,17 @@ class BugController extends Controller
         // $dql = "SELECT b, e, r FROM AppBundle:Bug b " .
         //        "JOIN b.engineer e JOIN b.reporter r " .
         //        "ORDER BY b.created DESC";
-        $dql = "SELECT b, e, r, p FROM AppBundle:Bug b " .
-                "JOIN b.engineer e JOIN b.reporter r JOIN b.products p " .
-                "ORDER BY b.created DESC";
-        /** @var Query $query */
-        $query = $this->getDoctrine()->getManager()->createQuery($dql);
+        
+        // $dql = "SELECT b, e, r, p FROM AppBundle:Bug b " .
+        //         "JOIN b.engineer e JOIN b.reporter r JOIN b.products p " .
+        //         "ORDER BY b.created DESC";
+        // /** @var Query $query */
+        // $query = $this->getDoctrine()->getManager()->createQuery($dql);
         // $query->setHydrationMode(Query::HYDRATE_ARRAY);
+
+        /** @var Query $query */
+        $query = $this->getDoctrine()->getRepository('AppBundle:Bug')
+            ->getRecentBugsArrayQuery();
 
         $paginator = $this->get('knp_paginator');        
         /** @var SlidingPagination $pagination */

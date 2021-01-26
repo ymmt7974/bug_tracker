@@ -22,15 +22,19 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
+        // // $products = $em->getRepository('AppBundle:Product')->findAll();
+        // $dql = "SELECT p.id, p.name, count(b.id) AS openBugs FROM AppBundle:Bug b ".
+        //        "JOIN b.products p WHERE b.status = 'OPEN' GROUP BY p.id";
+        // $products = $em->createQuery($dql)->getScalarResult();
+        // // 以下の書き方でも getScalarResult() と同様の結果になります
+        // // $products = $em->createQuery($dql)
+        // //     ->setHydrationMode(Query::HYDRATE_SCALAR)->getResult();
 
-        // $products = $em->getRepository('AppBundle:Product')->findAll();
-        $dql = "SELECT p.id, p.name, count(b.id) AS openBugs FROM AppBundle:Bug b ".
-               "JOIN b.products p WHERE b.status = 'OPEN' GROUP BY p.id";
-        $products = $em->createQuery($dql)->getScalarResult();
-        // 以下の書き方でも getScalarResult() と同様の結果になります
-        // $products = $em->createQuery($dql)
-        //     ->setHydrationMode(Query::HYDRATE_SCALAR)->getResult();
+
+        $products = $this->getDoctrine()->getRepository('AppBundle:Bug')
+            ->getOpenBugsByProductQuery()
+            ->getResult();
 
         dump($products);
 
