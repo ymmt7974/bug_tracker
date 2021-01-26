@@ -6,6 +6,8 @@ use AppBundle\Entity\Bug;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Query;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 
 /**
  * Bug controller.
@@ -20,14 +22,38 @@ class BugController extends Controller
      * @Route("/", name="bug_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
+        // $bugs = $em->getRepository('AppBundle:Bug')->findAll();
 
-        $bugs = $em->getRepository('AppBundle:Bug')->findAll();
+        // $dql = "SELECT b, e, r FROM AppBundle:Bug b " .
+        //        "JOIN b.engineer e JOIN b.reporter r " .
+        //        "ORDER BY b.created DESC";
+        $dql = "SELECT b, e, r, p FROM AppBundle:Bug b " .
+                "JOIN b.engineer e JOIN b.reporter r JOIN b.products p " .
+                "ORDER BY b.created DESC";
+        /** @var Query $query */
+        $query = $this->getDoctrine()->getManager()->createQuery($dql);
+        // $query->setHydrationMode(Query::HYDRATE_ARRAY);
 
+        $paginator = $this->get('knp_paginator');        
+        /** @var SlidingPagination $pagination */
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), // page number
+            5  // limit per page
+        );
+        // 上記 paginate()は内部で以下の２行と同様の処理を行い結果を返します。
+        // $query->setMaxResults(5);
+        // $bugs = $query->getResult();
+
+        // デバッグコード（ハイドレーションの確認）
+        dump($query->getHydrationMode());
+        dump($pagination->getItems());
+        
         return $this->render('bug/index.html.twig', array(
-            'bugs' => $bugs,
+            'pagination' => $pagination,
         ));
     }
 
@@ -46,7 +72,7 @@ class BugController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $bug->setStatus(Bug::STATUS_OPEN);
             $bug->setCreated(new \DateTime("now"));
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($bug);
             $em->flush();
@@ -70,6 +96,8 @@ class BugController extends Controller
     {
         $deleteForm = $this->createDeleteForm($bug);
 
+        dump(get_class($bug->getEngineer()));
+        
         return $this->render('bug/show.html.twig', array(
             'bug' => $bug,
             'delete_form' => $deleteForm->createView(),

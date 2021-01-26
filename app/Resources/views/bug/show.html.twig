@@ -21,6 +21,18 @@
                 <th>Status</th>
                 <td>{{ bug.status }}</td>
             </tr>
+            <tr>
+                <th>Reporter</th>
+                <td>{{ bug.reporter.name }}</td>
+            </tr>
+            <tr>
+                <th>Engineer</th>
+                <td>{{ bug.engineer.name }}</td>
+            </tr>
+            <tr>
+                <th>Products</th>
+                <td>{{ bug.products|join(', ') }}</td>
+            </tr>
         </tbody>
     </table>
 
